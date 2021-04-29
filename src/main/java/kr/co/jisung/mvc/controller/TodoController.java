@@ -25,7 +25,9 @@ public class TodoController {
 	@Autowired
 	private TodoService service;
 	
-	
+	/*
+	 * 할일 목록 가져오기
+	 */
 	@GetMapping("/dashboard")
 	public void dashboard() {
 		
