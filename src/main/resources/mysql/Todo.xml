@@ -4,6 +4,25 @@
 <!--namespace: Repository 위치 -->
 <mapper namespace="kr.co.jisung.mvc.repository.TodoRepository">
 	
+	<resultMap type="kr.co.jisung.mvc.domain.Member" id="member">
+		<id column="seq" property="seq"/>
+		<result column="memer_id" property="member_id"/>
+		<result column="member_pw" property="member_pw"/>
+	</resultMap>
+	
+	<resultMap type="kr.co.jisung.mvc.domain.Todo" id="todo">
+		<id column="seq" property="seq"/>
+		<result column="todo_content" property="todo_content"/>
+		<result column="todo_state" property="todo_state"/>
+		<result column="todo_date" property="todo_date"/>
+		<result column="reg_date" property="reg_date"/>
+		<collection property="member" resultMap="member"/>
+	</resultMap>
+	
+	<select id="getList" resultMap="todo">
+		SELECT * FROM todo LEFT JOIN member ON todo.member_seq = member.seq
+	</select>
+	
 	<insert id="save" parameterType="kr.co.jisung.mvc.domain.Todo">
 		INSERT INTO todo
 		(

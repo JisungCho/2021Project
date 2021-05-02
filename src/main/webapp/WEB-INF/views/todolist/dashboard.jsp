@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,7 +65,44 @@
 		<!-- Todo list section -->
 		<div class="row mx-1 px-5 pb-3 w-80">
 			<div class="col mx-auto to_do_list">
-			
+				<c:forEach items="${todolist}" var="todo">
+		            <div class="row px-3 align-items-center todo-item rounded">
+		                <div class="col-auto m-1 p-0 d-flex align-items-center">
+		                    <h2 class="m-0 p-0">
+		                        <i class="fa fa-square-o text-primary btn m-0 p-0" data-toggle="tooltip" data-placement="bottom" title="Mark as complete"></i>
+		                    </h2>
+		                </div>
+		                <div class="col px-1 m-1 d-flex align-items-center">
+		                    <input type="text" class="form-control form-control-lg border-0 edit-todo-input bg-transparent rounded px-3" readonly value="${todo.todo_content }" title="${todo.todo_content }" />
+		                </div>
+		                <c:if test="${todo.todo_date != null }">
+			                <div class="col-auto m-1 p-0 px-3">
+			                    <div class="row">
+			                        <div class="col-auto d-flex align-items-center rounded bg-white border border-warning">
+			                            <i class="fa fa-hourglass-2 my-2 px-2 text-warning btn" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Due on date"></i>
+			                            <h6 class="text my-2 pr-2"><fmt:formatDate value="${todo.todo_date }" pattern="yyyy/MM/dd"/></h6>
+			                        </div>
+			                    </div>
+			                </div>		                	
+		                </c:if>
+		                <div class="col-auto m-1 p-0 todo-actions">
+		                    <div class="row d-flex align-items-center justify-content-end">
+		                        <h5 class="m-0 p-0 px-2">
+		                            <i class="fa fa-pencil text-info btn m-0 p-0" data-toggle="tooltip" data-placement="bottom" title="Edit todo"></i>
+		                        </h5>
+		                        <h5 class="m-0 p-0 px-2">
+		                            <i class="fa fa-trash-o text-danger btn m-0 p-0" data-toggle="tooltip" data-placement="bottom" title="Delete todo"></i>
+		                        </h5>
+		                    </div>
+		                    <div class="row todo-created-info">
+		                        <div class="col-auto d-flex align-items-center pr-2">
+		                            <i class="fa fa-info-circle my-2 px-2 text-black-50 btn" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Created date"></i>
+		                            <label class="date-label my-2 text-black-50"><fmt:formatDate value="${todo.reg_date }" pattern="yyyy/MM/dd"/></label>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>					
+				</c:forEach>
 			</div>
 		</div>
 	</div>

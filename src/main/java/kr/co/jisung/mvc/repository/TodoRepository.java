@@ -10,4 +10,5 @@ import kr.co.jisung.mvc.domain.Todo;
 public interface TodoRepository {
 	void save(Todo todo);
 	List<Todo> getList();
+	Boolean delete(int seq);
 }

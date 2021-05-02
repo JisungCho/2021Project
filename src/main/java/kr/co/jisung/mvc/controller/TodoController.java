@@ -1,11 +1,16 @@
 package kr.co.jisung.mvc.controller;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,10 +34,17 @@ public class TodoController {
 	 * 할일 목록 가져오기
 	 */
 	@GetMapping("/dashboard")
-	public void dashboard() {
-		
+	public void dashboard(Model model) {
+		List<Todo> todolist = service.getList();
+		if(todolist == null) {
+			throw new BaseException(BaseResponseCode.DATA_IS_NULL, new String[] {"목록"});
+		}
+		model.addAttribute("todolist",todolist);
 	}
 	
+	/*
+	 * 할일등록
+	 */
 	@PostMapping("/save")
 	@ResponseBody
 	public BaseResponse<Todo> add(@RequestBody Todo todo) {
@@ -44,4 +56,12 @@ public class TodoController {
 		return new BaseResponse<Todo>(todo);
 	}
 	
+	/*
+	 * 할일 삭제
+	 */
+	@DeleteMapping("/delete/{seq}")
+	@ResponseBody
+	public BaseResponse<Boolean> delete(@PathVariable int seq){
+		//해당 todo의 번호로 삭제
+	}
 }
