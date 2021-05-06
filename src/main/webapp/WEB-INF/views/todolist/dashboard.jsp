@@ -88,10 +88,10 @@
 		                <div class="col-auto m-1 p-0 todo-actions">
 		                    <div class="row d-flex align-items-center justify-content-end">
 		                        <h5 class="m-0 p-0 px-2">
-		                            <i class="fa fa-pencil text-info btn m-0 p-0" data-toggle="tooltip" data-placement="bottom" title="Edit todo"></i>
+		                            <i class="fa fa-pencil text-info btn m-0 p-0 edit" data-number="${todo.seq }" data-toggle="tooltip" data-placement="bottom" title="Edit todo"></i>
 		                        </h5>
 		                        <h5 class="m-0 p-0 px-2">
-		                            <i class="fa fa-trash-o text-danger btn m-0 p-0" data-toggle="tooltip" data-placement="bottom" title="Delete todo"></i>
+		                            <i class="fa fa-trash-o text-danger btn m-0 p-0 delete" data-number="${todo.seq }" data-toggle="tooltip" data-placement="bottom" title="Delete todo"></i>
 		                        </h5>
 		                    </div>
 		                    <div class="row todo-created-info">

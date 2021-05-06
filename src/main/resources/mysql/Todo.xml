@@ -23,7 +23,15 @@
 		SELECT * FROM todo LEFT JOIN member ON todo.member_seq = member.seq
 	</select>
 	
-	<insert id="save" parameterType="kr.co.jisung.mvc.domain.Todo">
+	<select id="get" resultType="kr.co.jisung.mvc.domain.Todo">
+		SELECT * FROM todo WHERE seq = #{seq}
+	</select>
+	
+	<delete id="delete">
+		DELETE FROM todo WHERE seq = #{seq}
+	</delete>
+	
+	<insert id="save" parameterType="kr.co.jisung.mvc.domain.Todo" useGeneratedKeys="true" keyProperty="seq"> 
 		INSERT INTO todo
 		(
 			todo_content,

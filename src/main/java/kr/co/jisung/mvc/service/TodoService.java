@@ -24,6 +24,9 @@ public class TodoService {
 	/*
 	 * 해당 할일 가져오기
 	 */
+	public Todo get(int seq) {
+		return repository.get(seq);
+	}
 	
 	/*
 	 * 등록처리
@@ -35,4 +38,7 @@ public class TodoService {
 	/*
 	 * 삭제 처리
 	 */
+	public void delete(int seq) {
+		repository.delete(seq);
+	}
 }

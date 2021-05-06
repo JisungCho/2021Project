@@ -40,7 +40,7 @@ public class TodoController {
 			throw new BaseException(BaseResponseCode.DATA_IS_NULL, new String[] {"목록"});
 		}
 		model.addAttribute("todolist",todolist);
-	}
+	}	
 	
 	/*
 	 * 할일등록
@@ -62,6 +62,11 @@ public class TodoController {
 	@DeleteMapping("/delete/{seq}")
 	@ResponseBody
 	public BaseResponse<Boolean> delete(@PathVariable int seq){
-		//해당 todo의 번호로 삭제
+		Todo todo = service.get(seq);
+		if(todo == null) {
+			return new BaseResponse<Boolean>(false);
+		}
+		service.delete(seq);
+		return new BaseResponse<Boolean>(true);
 	}
 }

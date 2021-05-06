@@ -1,5 +1,5 @@
 window.onload = function () {
-    
+
     bootlint.showLintReportForCurrentDocument([], {
         hasProblems: false,
         problemFree: false
@@ -36,6 +36,22 @@ window.onload = function () {
             });
     });
     
+    $(".to_do_list").on("click",".delete",function(){
+    	var number = $(this).data("number");
+    	console.log(number);
+    	$.ajax({
+    		url: "/todolist/delete/"+number,
+    		type:'delete',
+    		dataType:'json',
+    		success : function(e){
+    			if(e.data == true){
+    				alert('삭제되었습니다.');
+    				location.reload();
+    			}
+    		}
+    	});
+    })
+    
 
     $(".add").on("click",function(){
 		var todo_data = {
@@ -54,7 +70,6 @@ window.onload = function () {
 			dataType: 'json',
 			success : function(e){
 					if(e.code == 'SUCCESS' && e.data.todo_date == null){
-					console.log("알람 데이터 없음");
 						var item = '<div class="row px-3 align-items-center todo-item rounded">'+
 						        '<div class="col-auto m-1 p-0 d-flex align-items-center">'+
 						            '<h2 class="m-0 p-0">'+
@@ -67,10 +82,10 @@ window.onload = function () {
 						        '<div class="col-auto m-1 p-0 todo-actions">'+
 						            '<div class="row d-flex align-items-center justify-content-end">'+
 						                '<h5 class="m-0 p-0 px-2">'+
-						                    '<i class="fa fa-pencil text-info btn m-0 p-0" data-toggle="tooltip" data-placement="bottom" title="Edit todo"></i>'+
+						                    '<i class="fa fa-pencil text-info btn m-0 p-0 edit" data-number="'+e.data.seq+ '"data-toggle="tooltip" data-placement="bottom" title="Edit todo"></i>'+
 						                '</h5>'+
 						                '<h5 class="m-0 p-0 px-2">'+
-						                    '<i class="fa fa-trash-o text-danger btn m-0 p-0" data-toggle="tooltip" data-placement="bottom" title="Delete todo"></i>'+
+						                    '<i class="fa fa-trash-o text-danger btn m-0 p-0 delete" data-number="'+e.data.seq+ '" data-toggle="tooltip" data-placement="bottom" title="Delete todo"></i>'+
 						                '</h5>'+
 						            '</div>'+
 						            '<div class="row todo-created-info">'+
