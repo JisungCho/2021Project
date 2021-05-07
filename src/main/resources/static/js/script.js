@@ -23,6 +23,7 @@ window.onload = function () {
         format: "yyyy/MM/dd",
         autoclose: true,
         todayHighlight: true,
+        clearBtn : true,
         startDate: currentDate,
         orientation: "bottom right"
     });
@@ -36,6 +37,16 @@ window.onload = function () {
             });
     });
     
+    $(".to_do_list").on("click",".edit",function(){
+    	var seq = $(this).data("number");
+    	$('#'+seq).removeClass("bg-transparent");
+    	$('#'+seq).attr("readonly",false);
+    	//수정버튼 보이기
+    	$('#todo_check'+seq).removeClass('d-none');
+    	//ajax로 수정완료후 수정버튼 제거
+    });
+    
+    //삭제버튼
     $(".to_do_list").on("click",".delete",function(){
     	var number = $(this).data("number");
     	console.log(number);
@@ -56,7 +67,7 @@ window.onload = function () {
     $(".add").on("click",function(){
 		var todo_data = {
 			todo_content : $(".todo_content").val(),
-			todo_state : "new",
+			todo_state : "ACTIVE",
 			todo_date : $(".due-date-label").text(),
 			reg_date : currentDate,
 			member_seq : 1
@@ -77,10 +88,13 @@ window.onload = function () {
 						            '</h2>'+
 						        '</div>'+
 						        '<div class="col px-1 m-1 d-flex align-items-center">'+
-						           '<input type="text" class="form-control form-control-lg border-0 edit-todo-input bg-transparent rounded px-3" readonly value="'+e.data.todo_content +' " title="Todo Content" />'+
+						           '<input type="text" id="'+e.data.seq+'"class="form-control form-control-lg border-0 edit-todo-input bg-transparent rounded px-3" readonly value="'+e.data.todo_content +' " title="Todo Content" />'+
 						        '</div>'+
 						        '<div class="col-auto m-1 p-0 todo-actions">'+
 						            '<div class="row d-flex align-items-center justify-content-end">'+
+						                '<h5 class="m-0 p-0 px-2">'+
+						                    '<i id="todo_check'+e.data.seq+'"class="fa fa-check text-info btn m-0 p-0 d-none" data-number="'+e.data.seq+ '"data-toggle="tooltip" data-placement="bottom" title="Edit todo"></i>'+
+						                '</h5>'+						            
 						                '<h5 class="m-0 p-0 px-2">'+
 						                    '<i class="fa fa-pencil text-info btn m-0 p-0 edit" data-number="'+e.data.seq+ '"data-toggle="tooltip" data-placement="bottom" title="Edit todo"></i>'+
 						                '</h5>'+
@@ -100,14 +114,15 @@ window.onload = function () {
 						$(".todo_content").val('');
 						$('[data-toggle="tooltip"]').tooltip();	
 					}else if(e.code == 'SUCCESS' && e.data.todo_date != null){
+						console.log(e.data.todo_date);
 						var item = '<div class="row px-3 align-items-center todo-item rounded">'+
 						        '<div class="col-auto m-1 p-0 d-flex align-items-center">'+
 						            '<h2 class="m-0 p-0">'+
-						                '<i class="mark fa fa-square-o text-primary btn m-0 p-0" data-toggle="tooltip" data-placement="bottom" title="Mark as complete"></i>'+
+						                '<i class="fa fa-square-o text-primary btn m-0 p-0" data-toggle="tooltip" data-placement="bottom" title="Mark as complete"></i>'+
 						            '</h2>'+
 						        '</div>'+
 						        '<div class="col px-1 m-1 d-flex align-items-center">'+
-						           '<input type="text" class="form-control form-control-lg border-0 edit-todo-input bg-transparent rounded px-3" readonly value="'+e.data.todo_content +' " title="Todo Content" />'+
+						           '<input type="text"  id="'+e.data.seq+'" class="form-control form-control-lg border-0 edit-todo-input bg-transparent rounded px-3" readonly value="'+e.data.todo_content +' " title="Todo Content" />'+
 						        '</div>'+
 					         	 '<div class="col-auto m-1 p-0 px-3">'+
                    					'<div class="row">'+
@@ -120,10 +135,13 @@ window.onload = function () {
 						        '<div class="col-auto m-1 p-0 todo-actions">'+
 						            '<div class="row d-flex align-items-center justify-content-end">'+
 						                '<h5 class="m-0 p-0 px-2">'+
-						                    '<i class="fa fa-pencil text-info btn m-0 p-0" data-toggle="tooltip" data-placement="bottom" title="Edit todo"></i>'+
+						                    '<i id="todo_check'+e.data.seq+'"class="fa fa-check text-info btn m-0 p-0 d-none" data-number="'+e.data.seq+ '"data-toggle="tooltip" data-placement="bottom" title="Edit todo"></i>'+
+						                '</h5>'+								            
+						                '<h5 class="m-0 p-0 px-2">'+
+						                    '<i class="fa fa-pencil text-info btn m-0 p-0 edit" data-number="'+e.data.seq+ '"data-toggle="tooltip" data-placement="bottom" title="Edit todo"></i>'+
 						                '</h5>'+
 						                '<h5 class="m-0 p-0 px-2">'+
-						                    '<i class="fa fa-trash-o text-danger btn m-0 p-0" data-toggle="tooltip" data-placement="bottom" title="Delete todo"></i>'+
+						                    '<i class="fa fa-trash-o text-danger btn m-0 p-0 delete" data-number="'+e.data.seq+ '" data-toggle="tooltip" data-placement="bottom" title="Delete todo"></i>'+
 						                '</h5>'+
 						            '</div>'+
 						            '<div class="row todo-created-info">'+

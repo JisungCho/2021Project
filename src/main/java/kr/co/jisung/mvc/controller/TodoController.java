@@ -20,6 +20,7 @@ import kr.co.jisung.configuration.BaseResponse;
 import kr.co.jisung.configuration.BaseResponseCode;
 import kr.co.jisung.exception.BaseException;
 import kr.co.jisung.mvc.domain.Todo;
+import kr.co.jisung.mvc.domain.TodoType;
 import kr.co.jisung.mvc.service.TodoService;
 
 @Controller
@@ -48,10 +49,10 @@ public class TodoController {
 	@PostMapping("/save")
 	@ResponseBody
 	public BaseResponse<Todo> add(@RequestBody Todo todo) {
-		logger.info(todo.toString());
 		if(StringUtils.isEmpty(todo.getTodo_content())) {
 			throw new BaseException(BaseResponseCode.VALIDATE_REQUIRED,new String[] {"todo_content","내용"}); 
 		}
+		logger.info(todo.toString());
 		service.save(todo);
 		return new BaseResponse<Todo>(todo);
 	}

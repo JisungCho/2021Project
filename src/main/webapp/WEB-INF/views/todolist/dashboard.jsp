@@ -73,7 +73,7 @@
 		                    </h2>
 		                </div>
 		                <div class="col px-1 m-1 d-flex align-items-center">
-		                    <input type="text" class="form-control form-control-lg border-0 edit-todo-input bg-transparent rounded px-3" readonly value="${todo.todo_content }" title="${todo.todo_content }" />
+		                    <input type="text" id="${todo.seq }" class="form-control form-control-lg border-0 edit-todo-input bg-transparent rounded px-3" readonly value="${todo.todo_content }" title="${todo.todo_content }" />
 		                </div>
 		                <c:if test="${todo.todo_date != null }">
 			                <div class="col-auto m-1 p-0 px-3">
@@ -87,6 +87,9 @@
 		                </c:if>
 		                <div class="col-auto m-1 p-0 todo-actions">
 		                    <div class="row d-flex align-items-center justify-content-end">
+		                   		<h5 class="m-0 p-0 px-2">
+		                            <i id="todo_check${todo.seq}" class="fa fa-check text-info btn m-0 p-0 d-none" data-number="${todo.seq }" data-toggle="tooltip" data-placement="bottom" title="Edit todo"></i>
+		                        </h5>
 		                        <h5 class="m-0 p-0 px-2">
 		                            <i class="fa fa-pencil text-info btn m-0 p-0 edit" data-number="${todo.seq }" data-toggle="tooltip" data-placement="bottom" title="Edit todo"></i>
 		                        </h5>
