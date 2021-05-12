@@ -79,7 +79,7 @@
 			                <div class="col-auto m-1 p-0 px-3">
 			                    <div class="row">
 			                        <div class="col-auto d-flex align-items-center rounded bg-white border border-warning">
-			                            <i class="fa fa-hourglass-2 my-2 px-2 text-warning btn" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Due on date"></i>
+			                            <i class="fa fa-hourglass-2 my-2 px-2 text-warning btn todo_date" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Due on date"></i>
 			                            <h6 class="text my-2 pr-2"><fmt:formatDate value="${todo.todo_date }" pattern="yyyy/MM/dd"/></h6>
 			                        </div>
 			                    </div>
@@ -87,14 +87,17 @@
 		                </c:if>
 		                <div class="col-auto m-1 p-0 todo-actions">
 		                    <div class="row d-flex align-items-center justify-content-end">
-		                   		<h5 class="m-0 p-0 px-2">
-		                            <i id="todo_check${todo.seq}" class="fa fa-check text-info btn m-0 p-0 d-none" data-number="${todo.seq }" data-toggle="tooltip" data-placement="bottom" title="Edit todo"></i>
+		                   		<h5  id="todo_check${todo.seq}" class="m-0 p-0 px-2 d-none">
+		                            <i class="fa fa-check text-info btn m-0 p-0 text-primary check" data-number="${todo.seq }" data-toggle="tooltip" data-placement="bottom" title="수정 완료"></i>
 		                        </h5>
-		                        <h5 class="m-0 p-0 px-2">
+		                        <h5 id="todo_cancle${todo.seq}" class="m-0 p-0 px-2 d-none">
+		                            <i class="fa fa-times text-info btn m-0 p-0 text-danger cancle" data-number="${todo.seq }" data-toggle="tooltip" data-placement="bottom" title="수정 취소"></i>
+		                        </h5>
+		                        <h5  id="todo_edit${todo.seq }" class="m-0 p-0 px-2">
 		                            <i class="fa fa-pencil text-info btn m-0 p-0 edit" data-number="${todo.seq }" data-toggle="tooltip" data-placement="bottom" title="Edit todo"></i>
 		                        </h5>
-		                        <h5 class="m-0 p-0 px-2">
-		                            <i class="fa fa-trash-o text-danger btn m-0 p-0 delete" data-number="${todo.seq }" data-toggle="tooltip" data-placement="bottom" title="Delete todo"></i>
+		                        <h5  id="todo_delete${todo.seq }" class="m-0 p-0 px-2">
+		                            <i  class="fa fa-trash-o text-danger btn m-0 p-0 delete" data-number="${todo.seq }" data-toggle="tooltip" data-placement="bottom" title="Delete todo"></i>
 		                        </h5>
 		                    </div>
 		                    <div class="row todo-created-info">

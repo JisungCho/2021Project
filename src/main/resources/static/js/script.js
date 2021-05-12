@@ -27,23 +27,70 @@ window.onload = function () {
         startDate: currentDate,
         orientation: "bottom right"
     });
+    
+    
 
     $(".due-date-button").on("click", function (event) {
         $(".due-date-button")
-            .datepicker("show")
+        .datepicker("show")
             .on("changeDate", function (dateChangeEvent) {
                 $(".due-date-button").datepicker("hide");
                 $(".due-date-label").text(formatDate(dateChangeEvent.date));
             });
     });
     
+    
+    
+    //edit 버튼 클릭
     $(".to_do_list").on("click",".edit",function(){
     	var seq = $(this).data("number");
     	$('#'+seq).removeClass("bg-transparent");
     	$('#'+seq).attr("readonly",false);
-    	//수정버튼 보이기
+    	//v , x 버튼 추가 edit , delete버튼 삭제
     	$('#todo_check'+seq).removeClass('d-none');
-    	//ajax로 수정완료후 수정버튼 제거
+    	$('#todo_cancle'+seq).removeClass('d-none');
+    	$("#todo_edit"+seq).addClass("d-none");
+    	$("#todo_delete"+seq).addClass("d-none");
+    });
+    
+    //날짜수정 버튼 클릭
+    $(".todo_date").on("click",function(){
+    	var day = $(this).next().text();
+	    $(this).datepicker({
+	        format: "yyyy/MM/dd",
+	        autoclose: true,
+	        todayHighlight: true,
+	        clearBtn : true,
+	        startDate: day,
+	        orientation: "bottom"
+	    });	
+	    
+	    $(this).datepicker("show");
+    })
+    
+    //수정 취소
+    $(".cancle").on("click",function(){
+    	var seq = $(this).data("number");
+    	$('#'+seq).addClass("bg-transparent");
+    	$('#'+seq).attr("readonly",true);
+    	//v , x 버튼 삭제 edit , delete버튼 추가
+    	$('#todo_check'+seq).addClass('d-none');
+    	$('#todo_cancle'+seq).addClass('d-none');
+    	$("#todo_edit"+seq).removeClass("d-none");
+    	$("#todo_delete"+seq).removeClass("d-none");
+    });
+    
+    //수정 완료
+    $(".check").on("click",function(){
+    	var seq = $(this).data("number");
+    	$('#'+seq).addClass("bg-transparent");
+    	$('#'+seq).attr("readonly",true);
+    	//v , x 버튼 삭제 edit , delete버튼 추가
+    	$('#todo_check'+seq).addClass('d-none');
+    	$('#todo_cancle'+seq).addClass('d-none');
+    	$("#todo_edit"+seq).removeClass("d-none");
+    	$("#todo_delete"+seq).removeClass("d-none");
+    	
     });
     
     //삭제버튼
