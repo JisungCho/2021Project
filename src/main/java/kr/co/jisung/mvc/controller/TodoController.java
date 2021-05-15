@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.jisung.configuration.BaseResponse;
@@ -35,8 +37,9 @@ public class TodoController {
 	 * 할일 목록 가져오기
 	 */
 	@GetMapping("/dashboard")
-	public void dashboard(Model model) {
-		List<Todo> todolist = service.getList();
+	public void dashboard(Model model,@RequestParam(name = "select",defaultValue = "ALL") String select) {
+		logger.info("선택된 select : "+select);
+		List<Todo> todolist = service.getList(select);
 		if(todolist == null) {
 			throw new BaseException(BaseResponseCode.DATA_IS_NULL, new String[] {"목록"});
 		}
@@ -56,6 +59,18 @@ public class TodoController {
 		service.save(todo);
 		return new BaseResponse<Todo>(todo);
 	}
+	
+	/*
+	 * 할일 수정
+	 */
+	@PutMapping("/update")
+	@ResponseBody
+	public BaseResponse<Todo> update(@RequestBody Todo todo){
+		logger.info("업데이트");
+		service.update(todo);
+		return new BaseResponse<Todo>(todo);
+	}
+	
 	
 	/*
 	 * 할일 삭제

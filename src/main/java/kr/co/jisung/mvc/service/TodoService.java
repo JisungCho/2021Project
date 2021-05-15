@@ -17,8 +17,8 @@ public class TodoService {
 	/*
 	 * 할일목록 가져오기
 	 */
-	public List<Todo> getList(){
-		return repository.getList();
+	public List<Todo> getList(String select){
+		return repository.getList(select);
 	};
 	
 	/*
@@ -35,6 +35,12 @@ public class TodoService {
 		repository.save(todo);
 	}
 	
+	/*
+	 * 수정처리
+	 */
+	public void update(Todo todo) {
+		repository.update(todo);
+	}
 	/*
 	 * 삭제 처리
 	 */

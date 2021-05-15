@@ -19,8 +19,11 @@
 		<collection property="member" resultMap="member"/>
 	</resultMap>
 	
-	<select id="getList" resultMap="todo">
-		SELECT * FROM todo LEFT JOIN member ON todo.member_seq = member.seq
+	<select id="getList" parameterType="String" resultMap="todo">
+		SELECT * FROM todo LEFT JOIN member ON todo.member_seq = member.seq 
+		<where>
+			<if test="select != 'ALL'">todo.todo_state = #{select}</if>
+		</where>
 	</select>
 	
 	<select id="get" resultType="kr.co.jisung.mvc.domain.Todo">
@@ -49,5 +52,15 @@
 			1
 		)
 	</insert>	
+	
+	<update id="update" parameterType="kr.co.jisung.mvc.domain.Todo">
+		UPDATE todo 
+		<set>
+			<if test="todo_content != null">todo_content = #{todo_content},</if>
+			<if test="todo_date != null">todo_date = #{todo_date},</if>
+			<if test="todo_state != null">todo_state = #{todo_state},</if>
+		</set>
+		WHERE seq = #{seq}
+	</update>
 	
 </mapper>
