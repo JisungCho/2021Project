@@ -37,14 +37,28 @@ public class TodoController {
 	 * 할일 목록 가져오기
 	 */
 	@GetMapping("/dashboard")
-	public void dashboard(Model model,@RequestParam(name = "select",defaultValue = "ALL") String select) {
-		logger.info("선택된 select : "+select);
+	public void dashboard(Model model) {
+		String select = "ALL";
 		List<Todo> todolist = service.getList(select);
 		if(todolist == null) {
 			throw new BaseException(BaseResponseCode.DATA_IS_NULL, new String[] {"목록"});
 		}
 		model.addAttribute("todolist",todolist);
 	}	
+	
+	/*
+	 * 셀렉트박스에서 선택한 데이터 
+	 */
+	@GetMapping("/select")
+	@ResponseBody
+	public BaseResponse<List<Todo>> select (@RequestParam String select){
+		
+		logger.info("상태에 맞는 목록 가져오기");
+		List<Todo> todo = service.getList(select);
+		
+		return new BaseResponse<List<Todo>>(todo);
+	}
+	
 	
 	/*
 	 * 할일등록
