@@ -53,6 +53,7 @@ window.onload = function () {
     	//v , x 버튼 추가 edit , delete버튼 삭제
     	$('#todo_check'+seq).removeClass('d-none');
     	$('#todo_cancle'+seq).removeClass('d-none');
+		
     	$("#todo_date"+seq).removeClass('d-none');
     	$("#todo_edit"+seq).addClass("d-none");
     	$("#todo_delete"+seq).addClass("d-none");
@@ -170,6 +171,14 @@ window.onload = function () {
 						        '<div class="col px-1 m-1 d-flex align-items-center">'+
 						           '<input type="text" id="'+e.data.seq+'"class="form-control form-control-lg border-0 edit-todo-input bg-transparent rounded px-3" readonly value="'+e.data.todo_content +' " title="Todo Content" />'+
 						        '</div>'+
+					         	 '<div class="col-auto m-1 p-0 px-3">'+
+                   					'<div class="row d-none">'+
+                       					'<div class="col-auto d-flex align-items-center rounded bg-white border border-warning">'+
+                           					'<i id="todo_date'+e.data.seq+'" class="fa fa-hourglass-2 my-2 px-2 text-warning btn d-none due" data-toggle="tooltip" data-placement="bottom" title="Due" data-original-title="Due on date"></i>'+
+                      						'<h6 id="todo_label'+e.data.seq+'" class="text my-2 pr-2">'+e.data.todo_date+'</h6>'+
+                        				'</div>'+
+                    				'</div>'+
+                				'</div>'+						        
 						        '<div class="col-auto m-1 p-0 todo-actions">'+
 						            '<div class="row d-flex align-items-center justify-content-end">'+
 						                '<h5 class="m-0 p-0 px-2">'+
