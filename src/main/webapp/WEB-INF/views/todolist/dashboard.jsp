@@ -81,28 +81,22 @@
 		                		<input type="text" id="${todo.seq }" class="form-control form-control-lg border-0 edit-todo-input bg-transparent rounded px-3" style="text-decoration: line-through;" readonly value="${todo.todo_content }" title="${todo.todo_content }" />
 		                	</c:if>
 		                </div>
-			            <div class="col-auto m-1 p-0 px-3">
-			            <c:if test="${todo.todo_date != null }"> <!--알림 날짜가 있는 경우 -->
-							<div class="row">
-			                 	<div class="col-auto d-flex align-items-center rounded bg-white border border-warning">
-			                    	<i id="todo_date${todo.seq}" class="fa fa-hourglass-2 my-2 px-2 text-warning btn due d-none" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Due on date"></i>
-			                        <h6 id="todo_label${todo.seq }" class="text my-2 pr-2"><fmt:formatDate value="${todo.todo_date }" pattern="yyyy/MM/dd"/></h6>
+				        <div id="todo_date_row${todo.seq}" class="col-auto m-1 p-0 px-3">
+				       		<c:if test="${todo.todo_date != null }"> <!--알림 날짜가 있는 경우 -->	            
+								<div class="row">
+				                 	<div class="col-auto d-flex align-items-center rounded bg-white border border-warning">
+				                        <h6 id="todo_label${todo.seq }" class="text my-2 pr-2"><fmt:formatDate value="${todo.todo_date }" pattern="yyyy/MM/dd"/></h6>
+									</div>
 								</div>
-							</div>
-						</c:if>
-			            <c:if test="${todo.todo_date == null }"> <!--알림 날짜가 없는경우 -->
-							<div class="row">
-			                 	<div class="col-auto d-flex align-items-center rounded bg-white border border-warning">
-			                    	<i id="todo_date${todo.seq}" class="fa fa-hourglass-2 my-2 px-2 text-warning btn due" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Due on date"></i>
-									<h6 id="todo_label${todo.seq }" class="text my-2 pr-2"><fmt:formatDate value="${todo.todo_date }" pattern="yyyy/MM/dd"/></h6>
-								</div>
-							</div>
-						</c:if>						
-			           	</div>		                	
+							</c:if>
+				     	</div>	
 		                <div class="col-auto m-1 p-0 todo-actions">
 		                	<!--  todo_state 가 active인 경우에만 삭제,수정 할 수 있게끔 -->
 		                	<c:if test="${todo.todo_state == 'ACTIVE' }">
 			                    <div class="row d-flex align-items-center justify-content-end">
+			                        <h5  id="todo_date${todo.seq }" class="m-0 p-0 px-2 d-none">
+			                            <i  class="fa fa-hourglass-2 text-warning btn m-0 p-0 due" data-number="${todo.seq }" data-toggle="tooltip" data-placement="bottom" title="Due on date"></i>
+			                        </h5>			                    
 			                   		<h5  id="todo_check${todo.seq}" class="m-0 p-0 px-2 d-none">
 			                            <i class="fa fa-check text-info btn m-0 p-0 text-primary check" data-number="${todo.seq }" data-toggle="tooltip" data-placement="bottom" title="수정 완료"></i>
 			                        </h5>
