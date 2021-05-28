@@ -63,4 +63,9 @@
 		WHERE seq = #{seq}
 	</update>
 	
+	<update id="changeState">
+			UPDATE todo
+				SET todo_state = 'HAS-DUE-DATE'
+			    WHERE todo_date < NOW() AND todo_state = 'ACTIVE';
+	</update>
 </mapper>

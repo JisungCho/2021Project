@@ -13,4 +13,5 @@ public interface TodoRepository {
 	Todo get(int seq);
 	void update(Todo todo);
 	void delete(int seq);
+	void changeState();
 }

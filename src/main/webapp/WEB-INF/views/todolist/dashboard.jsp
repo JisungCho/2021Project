@@ -92,8 +92,15 @@
 				     	</div>	
 		                <div class="col-auto m-1 p-0 todo-actions">
 		                	<!--  todo_state 가 active인 경우에만 삭제,수정 할 수 있게끔 -->
-		                	<c:if test="${todo.todo_state == 'ACTIVE' }">
 			                    <div class="row d-flex align-items-center justify-content-end">
+			                    	<c:if test="${todo.todo_state == 'ACTIVE' }">
+			                        <h5  id="todo_edit${todo.seq }" class="m-0 p-0 px-2">
+			                            <i class="fa fa-pencil text-info btn m-0 p-0 edit" data-number="${todo.seq }" data-toggle="tooltip" data-placement="bottom" title="Edit todo"></i>
+			                        </h5>
+			                        </c:if>
+			                        <h5  id="todo_delete${todo.seq }" class="m-0 p-0 px-2">
+			                            <i  class="fa fa-trash-o text-danger btn m-0 p-0 delete" data-number="${todo.seq }" data-toggle="tooltip" data-placement="bottom" title="Delete todo"></i>
+			                        </h5>
 			                        <h5  id="todo_date${todo.seq }" class="m-0 p-0 px-2 d-none">
 			                            <i  class="fa fa-hourglass-2 text-warning btn m-0 p-0 due" data-number="${todo.seq }" data-toggle="tooltip" data-placement="bottom" title="Due on date"></i>
 			                        </h5>			                    
@@ -102,15 +109,9 @@
 			                        </h5>
 			                        <h5 id="todo_cancle${todo.seq}" class="m-0 p-0 px-2 d-none">
 			                            <i class="fa fa-times text-info btn m-0 p-0 text-danger cancle" data-number="${todo.seq }" data-toggle="tooltip" data-placement="bottom" title="수정 취소"></i>
-			                        </h5>
-			                        <h5  id="todo_edit${todo.seq }" class="m-0 p-0 px-2">
-			                            <i class="fa fa-pencil text-info btn m-0 p-0 edit" data-number="${todo.seq }" data-toggle="tooltip" data-placement="bottom" title="Edit todo"></i>
-			                        </h5>
-			                        <h5  id="todo_delete${todo.seq }" class="m-0 p-0 px-2">
-			                            <i  class="fa fa-trash-o text-danger btn m-0 p-0 delete" data-number="${todo.seq }" data-toggle="tooltip" data-placement="bottom" title="Delete todo"></i>
-			                        </h5>
+			                        </h5>			                        
 			                    </div>
-		                    </c:if>
+		                    
 		                    <div class="row todo-created-info">
 		                        <div class="col-auto d-flex align-items-center pr-2">
 		                            <i class="fa fa-info-circle my-2 px-2 text-black-50 btn" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Created date"></i>
