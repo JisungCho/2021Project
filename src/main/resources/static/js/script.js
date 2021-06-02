@@ -200,7 +200,7 @@ window.onload = function () {
 						item +=		        
 									'<div class="row">'+
                        					'<div class="col-auto d-flex align-items-center rounded bg-white border border-warning">'+
-                      						'<h6 id="todo_label'+e.data.seq+'" class="text my-2 pr-2">'+e.data.todo_date+'</h6>'+
+                      						'<h6 id="todo_label'+e.data.seq+'" class="text my-2 pr-2 font-italic">'+e.data.todo_date+'</h6>'+
                         				'</div>'+
                     				'</div>';				
 					}
@@ -238,7 +238,8 @@ window.onload = function () {
 			}
 		});	
     });
-  	//마커 클릭시
+    
+  		//마커 클릭시
 		$(document).on("click",".todo_mark",function(){
 			
 			var seq = $(this).data("number"); //클릭한 할 일의 번호
@@ -287,6 +288,7 @@ window.onload = function () {
 		
 		//Filter 적용시 
 		$('#select').change(function() {
+			//필터이름
 		    var data = $(this).val();
 			
 			$.ajax({
@@ -304,12 +306,13 @@ window.onload = function () {
 							var item = '<div class="row px-3 align-items-center todo-item rounded">'+
 							        '<div class="col-auto m-1 p-0 d-flex align-items-center">'+
 							            '<h2 class="m-0 p-0">';
-					         if(e.data[i].todo_state == "ACTIVE"){
+					         if(e.data[i].todo_state == "ACTIVE" || e.data[i].todo_state == "HAS_DUE_DATE"){
 					         	item += '<i class="fa fa-square-o text-primary btn m-0 p-0 todo_mark" data-number="'+e.data[i].seq +'" data-toggle="tooltip" data-placement="bottom" title="Mark as complete"></i></h2></div><div class="col px-1 m-1 d-flex align-items-center">'
 					         }else if(e.data[i].todo_state == "COMPLETED"){
 					         	item += '<i class="fa fa-check-square-o text-primary btn m-0 p-0 todo_mark" data-number="'+e.data[i].seq +'" data-toggle="tooltip" data-placement="bottom" title="Mark as do"></i></h2></div><div class="col px-1 m-1 d-flex align-items-center">'		
-					         }           	
-					         if(e.data[i].todo_state == "ACTIVE"){
+					         }
+					                    	
+					         if(e.data[i].todo_state == "ACTIVE" || e.data[i].todo_state == "HAS_DUE_DATE"){
 					         	item  += '<input type="text" id="'+e.data[i].seq +'" class="form-control form-control-lg border-0 edit-todo-input bg-transparent rounded px-3" readonly value="'+e.data[i].todo_content +'" title="'+e.data[i].todo_content +'" /></div>'
 					         }else if(e.data[i].todo_state == "COMPLETED"){
 					         	item += '<input type="text" id="'+e.data[i].seq +'" class="form-control form-control-lg border-0 edit-todo-input bg-transparent rounded px-3" style="text-decoration: line-through;" readonly value="'+e.data[i].todo_content +'" title="'+e.data[i].todo_content +'" /></div>'
@@ -320,13 +323,13 @@ window.onload = function () {
 	                   					'<div class="row">'+
 	                       					'<div class="col-auto d-flex align-items-center rounded bg-white border border-warning">'+
 	                           					'<i id="todo_date'+e.data[i].seq+'" class="fa fa-hourglass-2 my-2 px-2 text-warning btn d-none due" data-toggle="tooltip" data-placement="bottom" title="Due" data-original-title="Due on date"></i>'+
-	                      						'<h6 id="todo_label'+e.data[i].seq+'" class="text my-2 pr-2">'+e.data[i].todo_date+'</h6>'+
+	                      						'<h6 id="todo_label'+e.data[i].seq+'" class="text my-2 pr-2 font-italic">'+e.data[i].todo_date+'</h6>'+
 	                        				'</div>'+
 	                    				'</div>'+
 	                				'</div>';									
 							}
 							item += '<div class="col-auto m-1 p-0 todo-actions">';
-							if(e.data[i].todo_state == "ACTIVE"){
+							if(e.data[i].todo_state == "ACTIVE" ){
 								item += 
 					                    '<div class="row d-flex align-items-center justify-content-end">'+
 					                   		'<h5  id="todo_check'+e.data[i].seq+'" class="m-0 p-0 px-2 d-none">'+

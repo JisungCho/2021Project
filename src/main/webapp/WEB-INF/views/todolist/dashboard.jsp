@@ -52,7 +52,7 @@
 					<option value="ALL" selected>All</option>
 					<option value="COMPLETED">Completed</option>
 					<option value="ACTIVE">Active</option>
-					<option value="HAS-DUE-DATE">Has due date</option>
+					<option value="HAS_DUE_DATE">Has due date</option>
 				</select>
 			</div>
 		</div>
@@ -64,19 +64,19 @@
 		                <div class="col-auto m-1 p-0 d-flex align-items-center">
 		                    <h2 class="m-0 p-0">
 		                    <!-- todo_state의 상태에 따라서 마커 설정 -->
-		                    	<c:if test="${todo.todo_state == 'ACTIVE' }">
+		                    	<c:if test="${todo.todo_state == 'ACTIVE' || todo.todo_state == 'HAS_DUE_DATE' }">
 		                    		<i class="fa fa-square-o text-primary btn m-0 p-0 todo_mark" data-number="${todo.seq }" data-toggle="tooltip" data-placement="bottom" title="Mark as complete"></i>
 		                    	</c:if>
-		                        <c:if test="${todo.todo_state == 'COMPLETED' }">
+		                        <c:if test="${todo.todo_state == 'COMPLETED'}">
 		                    		<i class="fa fa-check-square-o text-primary btn m-0 p-0 todo_mark" data-number="${todo.seq }" data-toggle="tooltip" data-placement="bottom" title="Mark as do"></i>
 		                    	</c:if>
 		                    </h2>
 		                </div>
 		                <div class="col px-1 m-1 d-flex align-items-center">
 		                	<!-- todo_state의 상태에 따라서 todo내용 설정 -->
-		                	<c:if test="${todo.todo_state == 'ACTIVE' }">
+		                	<c:if test="${todo.todo_state == 'ACTIVE' || todo.todo_state == 'HAS_DUE_DATE' }">
 		                		<input type="text" id="${todo.seq }" class="form-control form-control-lg border-0 edit-todo-input bg-transparent rounded px-3" readonly value="${todo.todo_content }" title="${todo.todo_content }" />
-		                	</c:if>
+		                	</c:if>		                	
 		                   	<c:if test="${todo.todo_state == 'COMPLETED' }">
 		                		<input type="text" id="${todo.seq }" class="form-control form-control-lg border-0 edit-todo-input bg-transparent rounded px-3" style="text-decoration: line-through;" readonly value="${todo.todo_content }" title="${todo.todo_content }" />
 		                	</c:if>
@@ -85,15 +85,20 @@
 				       		<c:if test="${todo.todo_date != null }"> <!--알림 날짜가 있는 경우 -->	            
 								<div class="row">
 				                 	<div class="col-auto d-flex align-items-center rounded bg-white border border-warning">
-				                        <h6 id="todo_label${todo.seq }" class="text my-2 pr-2"><fmt:formatDate value="${todo.todo_date }" pattern="yyyy/MM/dd"/></h6>
+				                        <c:if test="${todo.todo_state == 'HAS_DUE_DATE' }">
+				                        	<h6 id="todo_label${todo.seq }" class="text my-2 pr-2 text-danger font-italic font-weight-bold"><fmt:formatDate value="${todo.todo_date }" pattern="yyyy/MM/dd"/></h6>
+										</c:if>
+				                        <c:if test="${todo.todo_state != 'HAS_DUE_DATE' }">
+				                        	<h6 id="todo_label${todo.seq }" class="text my-2 pr-2 font-italic"><fmt:formatDate value="${todo.todo_date }" pattern="yyyy/MM/dd"/></h6>
+										</c:if>										
 									</div>
 								</div>
 							</c:if>
 				     	</div>	
 		                <div class="col-auto m-1 p-0 todo-actions">
-		                	<!--  todo_state 가 active인 경우에만 삭제,수정 할 수 있게끔 -->
+		                	<!--  todo_state 가 active인 경우에만 수정 할 수 있게끔 -->
 			                    <div class="row d-flex align-items-center justify-content-end">
-			                    	<c:if test="${todo.todo_state == 'ACTIVE' }">
+			                    	<c:if test="${todo.todo_state == 'ACTIVE' || todo.todo_state == 'HAS_DUE_DATE' }">
 			                        <h5  id="todo_edit${todo.seq }" class="m-0 p-0 px-2">
 			                            <i class="fa fa-pencil text-info btn m-0 p-0 edit" data-number="${todo.seq }" data-toggle="tooltip" data-placement="bottom" title="Edit todo"></i>
 			                        </h5>
@@ -115,7 +120,9 @@
 		                    <div class="row todo-created-info">
 		                        <div class="col-auto d-flex align-items-center pr-2">
 		                            <i class="fa fa-info-circle my-2 px-2 text-black-50 btn" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Created date"></i>
-		                            <label class="date-label my-2 text-black-50"><fmt:formatDate value="${todo.reg_date }" pattern="yyyy/MM/dd"/></label>
+		                            <label class="date-label my-2 text-black-50">
+		                            	<fmt:formatDate value="${todo.reg_date }" pattern="yyyy/MM/dd"/>
+		                            </label>
 		                        </div>
 		                    </div>
 		                </div>

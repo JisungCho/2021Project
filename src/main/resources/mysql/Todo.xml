@@ -52,6 +52,13 @@
 			1
 		)
 	</insert>	
+	<update id="changeState">
+			<![CDATA[
+				UPDATE todo
+					SET todo_state = 'HAS_DUE_DATE'
+			    	WHERE todo_date < NOW() AND todo_state = 'ACTIVE'
+			]]>
+	</update>
 	
 	<update id="update" parameterType="kr.co.jisung.mvc.domain.Todo">
 		UPDATE todo 
@@ -62,10 +69,6 @@
 		</set>
 		WHERE seq = #{seq}
 	</update>
-	
-	<update id="changeState">
-			UPDATE todo
-				SET todo_state = 'HAS-DUE-DATE'
-			    WHERE todo_date < NOW() AND todo_state = 'ACTIVE';
-	</update>
+
+
 </mapper>
