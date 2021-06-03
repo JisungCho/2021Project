@@ -85,12 +85,15 @@
 				       		<c:if test="${todo.todo_date != null }"> <!--알림 날짜가 있는 경우 -->	            
 								<div class="row">
 				                 	<div class="col-auto d-flex align-items-center rounded bg-white border border-warning">
-				                        <c:if test="${todo.todo_state == 'HAS_DUE_DATE' }">
-				                        	<h6 id="todo_label${todo.seq }" class="text my-2 pr-2 text-danger font-italic font-weight-bold"><fmt:formatDate value="${todo.todo_date }" pattern="yyyy/MM/dd"/></h6>
-										</c:if>
-				                        <c:if test="${todo.todo_state != 'HAS_DUE_DATE' }">
-				                        	<h6 id="todo_label${todo.seq }" class="text my-2 pr-2 font-italic"><fmt:formatDate value="${todo.todo_date }" pattern="yyyy/MM/dd"/></h6>
-										</c:if>										
+				                 		<c:set var="today" value="<%=new java.util.Date()%>" />
+										<c:choose>
+					                        <c:when test="${todo.todo_state == 'HAS_DUE_DATE'  || todo.todo_date < today}">
+					                        	<h6 id="todo_label${todo.seq }" class="text my-2 pr-2 text-danger font-italic font-weight-bold"><fmt:formatDate value="${todo.todo_date }" pattern="yyyy/MM/dd"/></h6>
+											</c:when>
+					                        <c:when test="${todo.todo_state != 'HAS_DUE_DATE'}">
+					                        	<h6 id="todo_label${todo.seq }" class="text my-2 pr-2 font-italic"><fmt:formatDate value="${todo.todo_date }" pattern="yyyy/MM/dd"/></h6>
+											</c:when>	
+										</c:choose>									
 									</div>
 								</div>
 							</c:if>

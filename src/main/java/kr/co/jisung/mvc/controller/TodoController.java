@@ -1,5 +1,7 @@
 package kr.co.jisung.mvc.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -22,7 +24,6 @@ import kr.co.jisung.configuration.BaseResponse;
 import kr.co.jisung.configuration.BaseResponseCode;
 import kr.co.jisung.exception.BaseException;
 import kr.co.jisung.mvc.domain.Todo;
-import kr.co.jisung.mvc.domain.TodoType;
 import kr.co.jisung.mvc.service.TodoService;
 
 @Controller

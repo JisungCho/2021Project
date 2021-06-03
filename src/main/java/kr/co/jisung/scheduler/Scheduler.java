@@ -1,7 +1,5 @@
 package kr.co.jisung.scheduler;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -16,11 +14,9 @@ public class Scheduler {
 	TodoService service;
 	
 	//매일 자정에 기간이 지난 todo이면서 상태가 ACTIVE인 todo는 상태를 HAS-DUE-DATE로 바꿔줌
-	@Scheduled(cron = "0 0 0 1/1 * ?")
+	//현재는 매 시간 체크
+	@Scheduled(cron = "0 0 0/1 1/1 * ?")
 	public void schedule1() {
-		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd");
-		Date time = new Date();
-		String time1 = format1.format(time);
-		System.out.println(time1);
+		service.changeState();
 	}
 }

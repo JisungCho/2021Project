@@ -97,7 +97,7 @@ window.onload = function () {
     })
     
     //수정 취소
-    $(".cancle").on("click",function(){
+    $(document).on("click",".cancle",function(){
     	var seq = $(this).data("number");
     	$('#'+seq).addClass("bg-transparent");
     	$('#'+seq).attr("readonly",true);
@@ -139,6 +139,7 @@ window.onload = function () {
 			todo_date : $("#todo_label"+seq).text(),
 			member_seq : 1
 		};
+    	
     	
     	$.ajax({
     		url : "/todolist/update",
@@ -240,7 +241,7 @@ window.onload = function () {
     });
     
   		//마커 클릭시
-		$(document).on("click",".todo_mark",function(){
+	$(document).on("click",".todo_mark",function(){
 			
 			var seq = $(this).data("number"); //클릭한 할 일의 번호
 			var mark = $(this); // 클릭한 마커
@@ -286,7 +287,7 @@ window.onload = function () {
 		});   
 		
 		
-		//Filter 적용시 
+		//Filter 클릭 시
 		$('#select').change(function() {
 			//필터이름
 		    var data = $(this).val();
@@ -298,6 +299,7 @@ window.onload = function () {
 				data : {
 					select : data,
 				},
+				dataType : 'json',
 				success: function(e){
 					//목록 창 클리어
 					$(".to_do_list").empty();
@@ -306,48 +308,63 @@ window.onload = function () {
 							var item = '<div class="row px-3 align-items-center todo-item rounded">'+
 							        '<div class="col-auto m-1 p-0 d-flex align-items-center">'+
 							            '<h2 class="m-0 p-0">';
+							            
 					         if(e.data[i].todo_state == "ACTIVE" || e.data[i].todo_state == "HAS_DUE_DATE"){
 					         	item += '<i class="fa fa-square-o text-primary btn m-0 p-0 todo_mark" data-number="'+e.data[i].seq +'" data-toggle="tooltip" data-placement="bottom" title="Mark as complete"></i></h2></div><div class="col px-1 m-1 d-flex align-items-center">'
-					         }else if(e.data[i].todo_state == "COMPLETED"){
+					         }
+					         if(e.data[i].todo_state == "COMPLETED"){
 					         	item += '<i class="fa fa-check-square-o text-primary btn m-0 p-0 todo_mark" data-number="'+e.data[i].seq +'" data-toggle="tooltip" data-placement="bottom" title="Mark as do"></i></h2></div><div class="col px-1 m-1 d-flex align-items-center">'		
 					         }
 					                    	
 					         if(e.data[i].todo_state == "ACTIVE" || e.data[i].todo_state == "HAS_DUE_DATE"){
 					         	item  += '<input type="text" id="'+e.data[i].seq +'" class="form-control form-control-lg border-0 edit-todo-input bg-transparent rounded px-3" readonly value="'+e.data[i].todo_content +'" title="'+e.data[i].todo_content +'" /></div>'
-					         }else if(e.data[i].todo_state == "COMPLETED"){
+					         }
+					         if(e.data[i].todo_state == "COMPLETED"){
 					         	item += '<input type="text" id="'+e.data[i].seq +'" class="form-control form-control-lg border-0 edit-todo-input bg-transparent rounded px-3" style="text-decoration: line-through;" readonly value="'+e.data[i].todo_content +'" title="'+e.data[i].todo_content +'" /></div>'
-					         } 
+					         }
+					         
+					         item +=  '<div id="todo_date_row'+e.data[i].seq+'" class="col-auto m-1 p-0 px-3">';
+							
 							if(e.data[i].todo_date != null){
 								item += 
-						          '<div class="col-auto m-1 p-0 px-3">'+
 	                   					'<div class="row">'+
-	                       					'<div class="col-auto d-flex align-items-center rounded bg-white border border-warning">'+
-	                           					'<i id="todo_date'+e.data[i].seq+'" class="fa fa-hourglass-2 my-2 px-2 text-warning btn d-none due" data-toggle="tooltip" data-placement="bottom" title="Due" data-original-title="Due on date"></i>'+
-	                      						'<h6 id="todo_label'+e.data[i].seq+'" class="text my-2 pr-2 font-italic">'+e.data[i].todo_date+'</h6>'+
-	                        				'</div>'+
-	                    				'</div>'+
-	                				'</div>';									
+	                       					'<div class="col-auto d-flex align-items-center rounded bg-white border border-warning">';
+	                       		
+	                       		if(e.data[i].todo_state == "HAS_DUE_DATE"){
+	                       		item +=				
+	                       						'<h6 id="todo_label'+e.data[i].seq+'" class="text my-2 pr-2 text-danger font-italic font-weight-bold">'+e.data[i].todo_date+'</h6></div></div>';
+	                       		}else{
+	                       		item +=				
+	                       						'<h6 id="todo_label'+e.data[i].seq+'" class="text my-2 pr-2 font-italic">'+e.data[i].todo_date+'</h6></div></div>';	                       		
+	                       		}
 							}
-							item += '<div class="col-auto m-1 p-0 todo-actions">';
-							if(e.data[i].todo_state == "ACTIVE" ){
-								item += 
-					                    '<div class="row d-flex align-items-center justify-content-end">'+
+							
+							item += '</div>'+
+										 '<div class="col-auto m-1 p-0 todo-actions">'+
+									     	'<div class="row d-flex align-items-center justify-content-end">';
+										
+							
+							if(e.data[i].todo_state == "ACTIVE" || e.data[i].todo_state == "HAS_DUE_DATE"){
+							item  += 
+					                        '<h5  id="todo_edit'+e.data[i].seq+'" class="m-0 p-0 px-2">'+
+					                            '<i class="fa fa-pencil text-info btn m-0 p-0 edit" data-number="'+e.data[i].seq+'" data-toggle="tooltip" data-placement="bottom" title="Edit todo"></i>'+
+					                        '</h5>';
+							}
+							item +=
+					                        '<h5  id="todo_delete'+e.data[i].seq+'" class="m-0 p-0 px-2">'+
+					                            '<i  class="fa fa-trash-o text-danger btn m-0 p-0 delete" data-number="'+e.data[i].seq+'" data-toggle="tooltip" data-placement="bottom" title="Delete todo"></i>'+
+					                        '</h5>'+		
+					                        '<h5  id="todo_date'+e.data[i].seq+'" class="m-0 p-0 px-2 d-none">'+
+					                            '<i  class="fa fa-hourglass-2 text-warning btn m-0 p-0 due" data-number="'+e.data[i].seq+'" data-toggle="tooltip" data-placement="bottom" title="Due on date"></i>'+
+					                        '</h5>'+			 					                        								
 					                   		'<h5  id="todo_check'+e.data[i].seq+'" class="m-0 p-0 px-2 d-none">'+
 					                            '<i class="fa fa-check text-info btn m-0 p-0 text-primary check" data-number="'+e.data[i].seq+'" data-toggle="tooltip" data-placement="bottom" title="수정 완료"></i>'+
 					                        '</h5>'+
 					                        '<h5 id="todo_cancle'+e.data[i].seq+'" class="m-0 p-0 px-2 d-none">'+
 					                            '<i class="fa fa-times text-info btn m-0 p-0 text-danger cancle" data-number="'+e.data[i].seq+'" data-toggle="tooltip" data-placement="bottom" title="수정 취소"></i>'+
 					                        '</h5>'+
-					                        '<h5  id="todo_edit'+e.data[i].seq+'" class="m-0 p-0 px-2">'+
-					                            '<i class="fa fa-pencil text-info btn m-0 p-0 edit" data-number="'+e.data[i].seq+'" data-toggle="tooltip" data-placement="bottom" title="Edit todo"></i>'+
-					                        '</h5>'+
-					                        '<h5  id="todo_delete'+e.data[i].seq+'" class="m-0 p-0 px-2">'+
-					                            '<i  class="fa fa-trash-o text-danger btn m-0 p-0 delete" data-number="'+e.data[i].seq+'" data-toggle="tooltip" data-placement="bottom" title="Delete todo"></i>'+
-					                        '</h5>'+
-					                    '</div>';
-							}
-							item += 
-								        '<div class="row todo-created-info">'+
+					                  '</div>'+
+								      '<div class="row todo-created-info">'+
 								        	'<div class="col-auto d-flex align-items-center pr-2">'+
 								            	'<i class="fa fa-info-circle my-2 px-2 text-black-50 btn" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Created date"></i>'+
 								               	'<label class="date-label my-2 text-black-50">'+e.data[i].reg_date+'</label>'+
