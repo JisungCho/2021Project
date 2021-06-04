@@ -5,10 +5,14 @@ import java.util.Locale;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import kr.co.jisung.handler.BaseHandlerInterceptor;
 
 @Configuration
-public class WebConfiguration {
-	
+public class WebConfiguration implements WebMvcConfigurer{
+
 	@Bean
 	public ReloadableResourceBundleMessageSource messageSource() {
 		ReloadableResourceBundleMessageSource source = new ReloadableResourceBundleMessageSource();
@@ -23,5 +27,17 @@ public class WebConfiguration {
 		//없는 메세지일 경우 예외를 발생시키는 대신 코드를 기본 메세지로 한다.
 		source.setUseCodeAsDefaultMessage(true);
 		return source;
+	}
+	
+	//인터셉터 생성
+	@Bean
+	public BaseHandlerInterceptor baseHandlerInterceptor() {
+		return new BaseHandlerInterceptor();
+	}
+	
+	//인터셉터 등록
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(baseHandlerInterceptor());
 	}
 }

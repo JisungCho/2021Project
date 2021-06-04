@@ -86,8 +86,10 @@
 								<div class="row">
 				                 	<div class="col-auto d-flex align-items-center rounded bg-white border border-warning">
 				                 		<c:set var="today" value="<%=new java.util.Date()%>" />
+				                 		<c:set var="now"><fmt:formatDate value="${today}" pattern="yyyy/MM/dd" /></c:set> 
+				                 		<c:set var="date"><fmt:formatDate value="${todo.todo_date}" pattern="yyyy/MM/dd" /></c:set>
 										<c:choose>
-					                        <c:when test="${todo.todo_state == 'HAS_DUE_DATE'  || todo.todo_date < today}">
+					                        <c:when test="${todo.todo_state == 'HAS_DUE_DATE'  || date < now}">
 					                        	<h6 id="todo_label${todo.seq }" class="text my-2 pr-2 text-danger font-italic font-weight-bold"><fmt:formatDate value="${todo.todo_date }" pattern="yyyy/MM/dd"/></h6>
 											</c:when>
 					                        <c:when test="${todo.todo_state != 'HAS_DUE_DATE'}">
@@ -140,7 +142,7 @@
 	<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js'></script>
 	<script src='https://stackpath.bootstrapcdn.com/bootlint/1.1.0/bootlint.min.js'></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js'></script>
-	<script src="../js//script.js"></script>
+	<script src="../js/script.js"></script>
 	<script>history.scrollRestoration = "auto"</script><!-- 스크롤 위치 기억 -->
 </body>
 </html>
