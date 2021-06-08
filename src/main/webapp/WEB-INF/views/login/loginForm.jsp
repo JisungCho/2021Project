@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,29 +30,32 @@
 <!--===============================================================================================-->
 </head>
 <body>
+<c:url value="../j_spring_security_check" var="loginUrl" />
 
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
-				<form class="login100-form validate-form">
+				<form class="login100-form validate-form" method="post" action="${loginUrl }">
 					<span class="login100-form-title p-b-26"> 로그인 </span>
-
 					<div class="wrap-input100 validate-input" data-validate="Valid email is: a@b.c">
-						<input class="input100" type="text" name="email"> <span class="focus-input100" data-placeholder="Email"></span>
+						<input class="input100" value="${username }" type="text" name="member_id"> <span class="focus-input100" data-placeholder="ID"></span>
 					</div>
-
 					<div class="wrap-input100 validate-input" data-validate="Enter password">
 						<span class="btn-show-pass"> <i class="zmdi zmdi-eye"></i>
-						</span> <input class="input100" type="password" name="pass"> <span class="focus-input100" data-placeholder="Password"></span>
+						</span> <input class="input100" type="password" name="member_pw"> <span class="focus-input100" data-placeholder="Password"></span>
 					</div>
-
+					<c:if test="${param.error != null }">
+						<div class="text-center">
+							<span class="txt1 text-danger"> 로그인 에러<br/> </span>
+							<span class="txt1 text-danger"> ${error_message } </span>
+						</div>
+					</c:if>
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
-							<button class="login100-form-btn">Login</button>
+							<button type="submit" class="login100-form-btn">Login</button>
 						</div>
 					</div>
-
 					<div class="text-center p-t-115">
 						<span class="txt1"> Don’t have an account? </span> <a class="txt2" href="#"> Sign Up </a>
 					</div>

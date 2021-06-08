@@ -87,3 +87,7 @@
 
 
 })(jQuery);
+
+window.onload = function (e) {
+	
+}

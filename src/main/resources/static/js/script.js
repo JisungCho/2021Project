@@ -377,8 +377,5 @@ window.onload = function () {
 					}
 				}
 			});
-			
-			
 		});
-		 
 };

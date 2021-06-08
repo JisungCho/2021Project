@@ -24,6 +24,9 @@
 				<div class="p-1 h1 text-primary text-center mx-auto display-inline-block">
 					<i class="fa fa-check bg-primary text-white rounded p-2"></i> <u>My Todo</u>
 				</div>
+				<c:if test="${not empty pageContext.request.userPrincipal }">
+					<a href="/logout" class="btn btn-sm fa fa-sign-out bg-info text-white float-right">로그아웃</a>
+				</c:if>
 			</div>
 		</div>
 		<!-- Create todo section -->
