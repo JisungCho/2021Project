@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace: Repository 위치 -->
+<mapper namespace="kr.co.jisung.mvc.repository.MemberRepository">
+	<select id="findByMemberId" resultType="kr.co.jisung.mvc.domain.Member">
+		SELECT
+			m.member_pw AS member_pw,
+			r.role_name AS roleName
+		FROM member AS m
+		INNER JOIN member_role AS mr
+		  	ON m.seq = mr.member_seq
+		INNER JOIN role AS r 
+		  	ON r.seq = mr.role_seq
+		WHERE
+			m.member_id = #{member_id}
+    </select>
+	
+	<insert id="memberSave" parameterType="kr.co.jisung.mvc.domain.Member">
+	    INSERT INTO member
+        (
+            member_id,
+            member_pw
+        )
+        VALUES
+        (
+            #{member_id},
+            #{member_pw}
+        )
+	</insert>
+
+	<insert id="memberRoleSave">
+		INSERT INTO member_role
+        (
+            member_seq,
+            role_seq
+        )
+        VALUES
+        (
+            #{member_seq},
+            #{role_seq}
+        )
+	</insert>
+	
+	<select id="findMemberSeq" resultType="Integer">
+		SELECT 
+			seq
+		FROM member
+		WHERE member_id = #{member_id}
+	</select>
+	
+	<select id="findRoleSeq" resultType="Integer">
+		SELECT 
+			seq
+		FROM role
+		WHERE role_name = #{roleName}
+	</select>
+
+</mapper>

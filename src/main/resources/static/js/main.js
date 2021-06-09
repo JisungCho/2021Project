@@ -88,6 +88,30 @@
 
 })(jQuery);
 
-window.onload = function (e) {
-	
+window.onload = function () {
+	$(".signUp").on("click",function(e){
+		 
+		 e.preventDefault();
+		 
+		var data = {
+			member_id : $("input[name=member_id]").val(),
+			member_pw : $("input[name=member_pw]").val()
+		};
+		
+		console.log(data);
+		
+		
+		$.ajax({
+			url : "/login/save",
+    		type : "post",
+    		contentType: 'application/json',
+    		data : JSON.stringify(data),
+    		dataType: 'json',
+    		success : function(e){
+    			alert(e.message);
+				location.href = "/login/loginForm";
+    		}
+		});
+		
+	})
 }
