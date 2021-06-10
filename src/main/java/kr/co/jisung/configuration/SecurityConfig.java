@@ -1,5 +1,7 @@
 package kr.co.jisung.configuration;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,23 +19,19 @@ import kr.co.jisung.mvc.service.SecurityService;
 @Configuration//이 클래스를 빈으로 등록
 @EnableWebSecurity//스프링 시큐리티의 기능을 활성화
 public class SecurityConfig extends  WebSecurityConfigurerAdapter {
-
+	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired
 	public AuthenticationFailureHandler authenticationFailureHandler;
-	
+	@Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 	@Autowired
 	private SecurityService securityService;
-	
-	@Bean //회원가입시 비번 암호화에 필요한 bean 등록
-	public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
 	
 	@Bean//실제 인증을 한 이후에 인증이 완료되면 Authentication객체를 반환을 위한 bean등록
 	public DaoAuthenticationProvider authenticationProvider(SecurityService securityService) {
 		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
 		authenticationProvider.setUserDetailsService(securityService);
-		authenticationProvider.setPasswordEncoder(passwordEncoder());
+		authenticationProvider.setPasswordEncoder(bCryptPasswordEncoder);
 		return authenticationProvider;
 	}
 	
@@ -42,7 +40,7 @@ public class SecurityConfig extends  WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/css/**", "/js/**", "/images/**", "/fonts/**" , "/vendor/**");
+		web.ignoring().antMatchers("/css/**", "/js/**", "/images/**", "/fonts/**" , "/vendor/**","/favicon.ico", "/resources/**", "/error");
 	}
 	
 	/*
@@ -51,27 +49,27 @@ public class SecurityConfig extends  WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
+			.csrf().disable()
 			.authorizeRequests()
-			.antMatchers("/member/save").permitAll()
-			.antMatchers("/login/signUp").permitAll()
-			.antMatchers("/todolist/*").hasAnyAuthority("MEMBER","ADMIN")
+			.antMatchers("/join/*").permitAll()
+			.antMatchers("/todolist/**").hasAnyAuthority("MEMBER","ADMIN")
 			.anyRequest().authenticated();
-		
-		http.csrf().ignoringAntMatchers("/login/save");
 		
 		http.formLogin()
 			.usernameParameter("member_id")
 			.passwordParameter("member_pw")
-			.loginPage("/login/loginForm")
+			.loginPage("/join/loginForm")
+			.loginProcessingUrl("/loginProcess")
 			.defaultSuccessUrl("/todolist/dashboard")
 			.failureHandler(authenticationFailureHandler)
 			.permitAll();
 		
 		http.logout()
 			.logoutUrl("/logout")
-			.logoutSuccessUrl("/login/loginForm")
-			.deleteCookies("JSESSIONID")
-			.permitAll();
+			.logoutSuccessUrl("/")
+			.invalidateHttpSession(true)
+			.deleteCookies("JSESSIONID");
+		
 			
 	}
 

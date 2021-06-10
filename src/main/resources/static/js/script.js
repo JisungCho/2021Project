@@ -285,7 +285,18 @@ window.onload = function () {
 					});
 			}
 		});   
-		
+		//로그아웃
+		$(".fa-sign-out").on("click",function(e){
+			 e.preventDefault();
+			 
+			$.ajax({
+				url : "/logout",
+	    		type : "post",
+	    		success : function(e){
+					location.href = "/login/loginForm";
+    			}
+			});
+		});
 		
 		//Filter 클릭 시
 		$('#select').change(function() {

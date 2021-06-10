@@ -3,8 +3,17 @@
 
 <!--namespace: Repository 위치 -->
 <mapper namespace="kr.co.jisung.mvc.repository.MemberRepository">
-	<select id="findByMemberId" resultType="kr.co.jisung.mvc.domain.Member">
+	<resultMap type="kr.co.jisung.mvc.domain.Member" id="member">
+		<id property="seq" column="seq"/>
+		<result property="member_id" column="member_id"/>
+		<result property="member_pw" column="member_pw"/>
+		<result property="roleName" column="roleName"/>
+	</resultMap>
+	
+	<select id="findByMemberId" resultMap="member">
 		SELECT
+			m.seq AS seq,
+			m.member_id AS member_id,
 			m.member_pw AS member_pw,
 			r.role_name AS roleName
 		FROM member AS m
@@ -13,7 +22,7 @@
 		INNER JOIN role AS r 
 		  	ON r.seq = mr.role_seq
 		WHERE
-			m.member_id = #{member_id}
+			m.member_id = #{member_id};
     </select>
 	
 	<insert id="memberSave" parameterType="kr.co.jisung.mvc.domain.Member">

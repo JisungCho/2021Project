@@ -14,8 +14,8 @@ import kr.co.jisung.mvc.domain.Member;
 import kr.co.jisung.mvc.service.SecurityService;
 
 @Controller
-@RequestMapping("/login")
-public class LoginController {
+@RequestMapping("/join")
+public class JoinController {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Autowired

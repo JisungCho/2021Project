@@ -8,6 +8,7 @@ import kr.co.jisung.mvc.domain.Member;
 
 @Repository
 public interface MemberRepository {
+	
 	//유저 정보
 	ArrayList<Member> findByMemberId(String member_id);
 

@@ -20,7 +20,9 @@ import kr.co.jisung.mvc.repository.MemberRepository;
 
 @Service
 public class SecurityService implements UserDetailsService{
+	
 	Logger logger = LoggerFactory.getLogger(getClass());
+	
 	@Autowired
 	private MemberRepository memberRepository;
 	
@@ -33,14 +35,13 @@ public class SecurityService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String member_id) throws UsernameNotFoundException {
 		//DB로 부터 회원정보를 가져옴
 		//회원 정보를 List 형태로 받아오는 이유는 유저당 권한이 여러개일 수 도있기 때문
-		ArrayList<Member> memberAuthes = memberRepository.findByMemberId(member_id);
-
-		logger.info(memberAuthes.toString());
-		logger.info("############loadUserByUsername#############3");
-
+		ArrayList<Member>  memberAuthes = memberRepository.findByMemberId(member_id);
+		
 		if(memberAuthes.size() == 0) {
+			logger.warn("회원정보 없음");
 			throw new UsernameNotFoundException("Member " +member_id+ " Not Found");
 		}
+		
 		
 		//UserDetails 클래스를 상속받은 MemberPrincipalVO 리턴한다.
 		return new MemberPrincipalVO(memberAuthes);

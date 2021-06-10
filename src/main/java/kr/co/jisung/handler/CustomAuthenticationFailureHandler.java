@@ -22,6 +22,8 @@ public class CustomAuthenticationFailureHandler  implements AuthenticationFailur
 		String loginid = request.getParameter("member_id");
 		String errormsg = "";
 		
+		System.out.println("fail");
+		
 		if(exception instanceof BadCredentialsException) {
 			errormsg = "아이디나 비밀번호가 맞지 않습니다. 다시 확인해주세요.";
 		}else if(exception instanceof InternalAuthenticationServiceException) {
