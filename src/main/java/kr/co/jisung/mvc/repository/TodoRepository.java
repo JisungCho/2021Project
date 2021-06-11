@@ -9,7 +9,7 @@ import kr.co.jisung.mvc.domain.Todo;
 @Repository
 public interface TodoRepository {
 	void save(Todo todo);
-	List<Todo> getList(String select);
+	List<Todo> getList(Todo todo);
 	Todo get(int seq);
 	void update(Todo todo);
 	void delete(int seq);

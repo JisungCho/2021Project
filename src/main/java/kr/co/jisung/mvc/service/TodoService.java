@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.jisung.mvc.domain.Todo;
 import kr.co.jisung.mvc.domain.TodoType;
+import kr.co.jisung.mvc.repository.MemberRepository;
 import kr.co.jisung.mvc.repository.TodoRepository;
 
 @Service
@@ -19,13 +20,16 @@ public class TodoService {
 	@Autowired
 	private TodoRepository repository;
 	
+	@Autowired
+	private MemberRepository memberRepository;
+	
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	/*
 	 * 할일목록 가져오기
 	 */
-	public List<Todo> getList(String select){
-		return repository.getList(select);
+	public List<Todo> getList(Todo todo){
+		return repository.getList(Todo todo);
 	};
 	
 	/*

@@ -1,6 +1,7 @@
 package kr.co.jisung.mvc.domain;
 
 public enum TodoType implements BaseCodeLabelEnum{
+	ALL("전부"),
 	ACTIVE("할 일"),
 	COMPLETED("완료된 일"),
 	HAS_DUE_DATE("기한이 지난 일")

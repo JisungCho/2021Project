@@ -30,6 +30,7 @@
 			</div>
 		</div>
 		<!-- Create todo section -->
+		<input type="hidden" id="member_seq" value="${member_seq }">
 		<div class="row m-1 p-3">
 			<div class="col col-11 mx-auto">
 				<div class="row bg-white rounded shadow-sm p-2 add-todo-wrapper align-items-center justify-content-center">

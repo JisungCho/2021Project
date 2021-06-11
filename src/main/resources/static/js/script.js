@@ -178,7 +178,7 @@ window.onload = function () {
 			todo_state : "ACTIVE",
 			todo_date : $(".due-date-label").text(),
 			reg_date : currentDate,
-			member_seq : 1
+			member_seq : $("#member_seq").val()
 		};
    		$.ajax({
 			url : '/todolist/save',

@@ -63,5 +63,9 @@ public class SecurityService implements UserDetailsService{
 		}
 		return new BaseResponse<String>(BaseResponseCode.SUCCESS, "회원가입 실패");
 	}
-
+	
+	public int findMemberSeq(String member_id) {
+		return memberRepository.findMemberSeq(member_id);
+	}
+	
 }

@@ -8,6 +8,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,6 +28,8 @@ import kr.co.jisung.configuration.BaseResponse;
 import kr.co.jisung.configuration.BaseResponseCode;
 import kr.co.jisung.exception.BaseException;
 import kr.co.jisung.mvc.domain.Todo;
+import kr.co.jisung.mvc.domain.TodoType;
+import kr.co.jisung.mvc.service.SecurityService;
 import kr.co.jisung.mvc.service.TodoService;
 
 @Controller
@@ -34,17 +40,28 @@ public class TodoController {
 	@Autowired
 	private TodoService service;
 	
+	@Autowired
+	private SecurityService securityService;
+	
 	/*
 	 * 할일 목록 가져오기
 	 */
 	@GetMapping("/dashboard")
-	public void dashboard(Model model) {
-		String select = "ALL";
-		List<Todo> todolist = service.getList(select);
+	public void dashboard(Model model, Authentication authentication,Todo todo ) {
+		//member_seq얻기
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal(); 
+		String member_id = userDetails.getUsername(); 
+		int member_seq = securityService.findMemberSeq(member_id);
+		
+		todo.setMember_seq(member_seq);
+		todo.setTodo_state(TodoType.ALL);
+		
+		List<Todo> todolist = service.getList(todo);
 		if(todolist == null) {
 			throw new BaseException(BaseResponseCode.DATA_IS_NULL, new String[] {"목록"});
 		}
 		model.addAttribute("todolist",todolist);
+		model.addAttribute("member_seq", member_seq);
 	}	
 	
 	/*
