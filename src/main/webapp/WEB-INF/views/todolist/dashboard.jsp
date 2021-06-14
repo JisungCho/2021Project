@@ -25,7 +25,7 @@
 					<i class="fa fa-check bg-primary text-white rounded p-2"></i> <u>My Todo</u>
 				</div>
 				<c:if test="${not empty pageContext.request.userPrincipal }">
-					<a href="#" class="btn btn-sm fa fa-sign-out bg-info text-white float-right">로그아웃</a>
+					<a href="/logout" class="btn btn-sm fa fa-sign-out bg-info text-white float-right">로그아웃</a>
 				</c:if>
 			</div>
 		</div>
@@ -93,7 +93,7 @@
 				                 		<c:set var="now"><fmt:formatDate value="${today}" pattern="yyyy/MM/dd" /></c:set> 
 				                 		<c:set var="date"><fmt:formatDate value="${todo.todo_date}" pattern="yyyy/MM/dd" /></c:set>
 										<c:choose>
-					                        <c:when test="${todo.todo_state == 'HAS_DUE_DATE'  || date < now}">
+					                        <c:when test="${todo.todo_state == 'HAS_DUE_DATE'  || date < now}"><!-- 날짜가 지나있으면 빨간색 글씨로 표시 -->
 					                        	<h6 id="todo_label${todo.seq }" class="text my-2 pr-2 text-danger font-italic font-weight-bold"><fmt:formatDate value="${todo.todo_date }" pattern="yyyy/MM/dd"/></h6>
 											</c:when>
 					                        <c:when test="${todo.todo_state != 'HAS_DUE_DATE'}">

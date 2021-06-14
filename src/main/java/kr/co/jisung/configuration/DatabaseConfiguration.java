@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class DatabaseConfiguration {
-	
 	@Bean
 	@ConfigurationProperties(prefix = "spring.datasource")
 	public DataSource dataSource() {

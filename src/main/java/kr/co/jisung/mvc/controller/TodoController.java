@@ -57,6 +57,7 @@ public class TodoController {
 		todo.setTodo_state(TodoType.ALL);
 		
 		List<Todo> todolist = service.getList(todo);
+		
 		if(todolist == null) {
 			throw new BaseException(BaseResponseCode.DATA_IS_NULL, new String[] {"목록"});
 		}
@@ -69,10 +70,18 @@ public class TodoController {
 	 */
 	@GetMapping("/select")
 	@ResponseBody
-	public BaseResponse<List<Todo>> select (@RequestParam String select){
+	public BaseResponse<List<Todo>> select (@RequestParam TodoType select,Authentication authentication){
 		
+		Todo t1 = new Todo();
+		
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal(); 
+		String member_id = userDetails.getUsername(); 
+		int member_seq = securityService.findMemberSeq(member_id);
+		
+		t1.setMember_seq(member_seq);
+		t1.setTodo_state(select);
 		logger.info("상태에 맞는 목록 가져오기");
-		List<Todo> todo = service.getList(select);
+		List<Todo> todo = service.getList(t1);
 		
 		return new BaseResponse<List<Todo>>(todo);
 	}

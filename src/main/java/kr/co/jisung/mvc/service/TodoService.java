@@ -29,7 +29,7 @@ public class TodoService {
 	 * 할일목록 가져오기
 	 */
 	public List<Todo> getList(Todo todo){
-		return repository.getList(Todo todo);
+		return repository.getList(todo);
 	};
 	
 	/*

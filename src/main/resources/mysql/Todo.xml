@@ -25,7 +25,8 @@
 				LEFT JOIN member 
 				ON todo.member_seq = member.seq 
 		<where>
-			<if test="todo_state != 'ALL'">todo.todo_state = #{todo_state}</if>
+			<if test="member_seq != null">AND todo.member_seq = #{member_seq}</if> 
+			<if test="todo_state.code != 'ALL' ">AND todo.todo_state = #{todo_state}</if>
 		</where>
 	
 	</select>
@@ -60,7 +61,7 @@
 			<![CDATA[
 				UPDATE todo
 					SET todo_state = 'HAS_DUE_DATE'
-			    	WHERE todo_date < NOW() AND todo_state = 'ACTIVE'
+			    	WHERE todo_date < date_format(now(), '%Y/%m/%d')  AND todo_state = 'ACTIVE'
 			]]>
 	</update>
 	

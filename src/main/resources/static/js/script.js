@@ -285,6 +285,7 @@ window.onload = function () {
 					});
 			}
 		});   
+		/*
 		//로그아웃
 		$(".fa-sign-out").on("click",function(e){
 			 e.preventDefault();
@@ -297,6 +298,7 @@ window.onload = function () {
     			}
 			});
 		});
+		*/
 		
 		//Filter 클릭 시
 		$('#select').change(function() {

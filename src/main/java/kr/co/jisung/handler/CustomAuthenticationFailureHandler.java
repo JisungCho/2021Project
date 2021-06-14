@@ -33,7 +33,7 @@ public class CustomAuthenticationFailureHandler  implements AuthenticationFailur
 		request.setAttribute("username", loginid);
 		request.setAttribute("error_message", errormsg);
 		
-		request.getRequestDispatcher("login/loginForm?error=true").forward(request, response);
+		request.getRequestDispatcher("join/loginForm?error=true").forward(request, response);
 	}
 
 }

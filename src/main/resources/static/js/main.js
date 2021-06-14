@@ -102,14 +102,14 @@ window.onload = function () {
 		
 		
 		$.ajax({
-			url : "/login/save",
+			url : "/join/save",
     		type : "post",
     		contentType: 'application/json',
     		data : JSON.stringify(data),
     		dataType: 'json',
     		success : function(e){
     			alert(e.message);
-				location.href = "/login/loginForm";
+				location.href = "/join/loginForm";
     		}
 		});
 		
