@@ -50,10 +50,6 @@ public class TodoService {
 	 * 수정처리
 	 */
 	public void update(Todo todo) {
-		Date date = new Date();
-		if(todo.getTodo_date()!=null && todo.getTodo_date().after(date)) {
-			todo.setTodo_state(TodoType.ACTIVE);
-		}
 		repository.update(todo);
 	}
 	/*

@@ -9,7 +9,7 @@ window.onload = function () {
     
     $('[data-toggle="tooltip"]').tooltip();
 	
-	
+	//날짜 설정
     function formatDate(date) {
         return (
             date.getFullYear() +
@@ -32,13 +32,16 @@ window.onload = function () {
     });
     
     
-
     $(".due-date-button").on("click", function (event) {
         $(".due-date-button")
         .datepicker("show")
             .on("changeDate", function (dateChangeEvent) {
                 $(".due-date-button").datepicker("hide");
-                $(".due-date-label").text(formatDate(dateChangeEvent.date));
+               	if(dateChangeEvent.date != null){
+             		$(".due-date-label").text(formatDate(dateChangeEvent.date));  	
+               	}else{
+               		$(".due-date-label").text('');  	
+               	}
             });
     });
     
@@ -90,8 +93,12 @@ window.onload = function () {
 	    .datepicker("show")
 	    .on("changeDate", function (dateChangeEvent) {
                 $(".due-date-button").datepicker("hide");
-                console.log(formatDate(dateChangeEvent.date));
-                $("#todo_label"+seq).text(formatDate(dateChangeEvent.date));
+                console.log(dateChangeEvent.date);
+              	if(dateChangeEvent.date != null){
+              		$("#todo_label"+seq).text(formatDate(dateChangeEvent.date));
+               	}else{
+               		$("#todo_label"+seq).text('');	
+               	}
        	});
        	
     })
@@ -137,9 +144,9 @@ window.onload = function () {
     		seq : seq,
 			todo_content : $("#"+seq).val(),
 			todo_date : $("#todo_label"+seq).text(),
-			member_seq : 1
 		};
     	
+    	console.log(todo_data);
     	
     	$.ajax({
     		url : "/todolist/update",
@@ -240,7 +247,7 @@ window.onload = function () {
 		});	
     });
     
-  		//마커 클릭시
+  	//마커 클릭시
 	$(document).on("click",".todo_mark",function(){
 			
 			var seq = $(this).data("number"); //클릭한 할 일의 번호
@@ -251,6 +258,7 @@ window.onload = function () {
 					//해당 seq를 가진 todo에 접근해서 todo_state를 completed로 바꿔줌
 					var data = {
 						seq : seq,
+						todo_date : $("#todo_label"+seq).text(),
 						todo_state : "COMPLETED",
 					};					
 					
@@ -270,6 +278,7 @@ window.onload = function () {
 					//해당 seq를 가진 todo에 접근해서 todo_state를 ACTIVE로 바꿔줌
 					var data = {
 						seq : seq,
+						todo_date : $("#todo_label"+seq).text(),
 						todo_state : "ACTIVE",
 					};					
 					

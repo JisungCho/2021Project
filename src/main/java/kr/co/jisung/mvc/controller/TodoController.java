@@ -66,7 +66,7 @@ public class TodoController {
 	}	
 	
 	/*
-	 * 셀렉트박스에서 선택한 데이터 
+	 * 셀렉트박스에서 선택한 필터 적용
 	 */
 	@GetMapping("/select")
 	@ResponseBody
@@ -108,6 +108,7 @@ public class TodoController {
 	@ResponseBody
 	public BaseResponse<Todo> update(@RequestBody Todo todo){
 		logger.info("업데이트");
+		logger.info(todo.toString());
 		service.update(todo);
 		return new BaseResponse<Todo>(todo);
 	}

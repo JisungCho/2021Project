@@ -70,6 +70,7 @@
 		<set>
 			<if test="todo_content != null">todo_content = #{todo_content},</if>
 			<if test="todo_date != null">todo_date = #{todo_date},</if>
+			<if test="todo_date == null">todo_date = null,</if>
 			<if test="todo_state != null">todo_state = #{todo_state},</if>
 		</set>
 		WHERE seq = #{seq}
