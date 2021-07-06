@@ -31,7 +31,7 @@ window.onload = function () {
         orientation: "bottom right"
     });
     
-    
+    //Todo 입력창에서 날짜설정
     $(".due-date-button").on("click", function (event) {
         $(".due-date-button")
         .datepicker("show")
@@ -143,6 +143,7 @@ window.onload = function () {
     	var todo_data = {
     		seq : seq,
 			todo_content : $("#"+seq).val(),
+			todo_state : "ACTIVE",
 			todo_date : $("#todo_label"+seq).text(),
 		};
     	
@@ -194,7 +195,10 @@ window.onload = function () {
 			data : JSON.stringify(todo_data), //자동으로key,value 값으로 변환
 			dataType: 'json',
 			success : function(e){
-						var item = '<div class="row px-3 align-items-center todo-item rounded">'+
+				if(e.code == "VALIDATE_REQUIRED"){
+					alert("내용은 필수입니다.");
+				}else{
+											var item = '<div class="row px-3 align-items-center todo-item rounded">'+
 						        '<div class="col-auto m-1 p-0 d-flex align-items-center">'+
 						            '<h2 class="m-0 p-0">'+
 						                '<i class="fa fa-square-o text-primary btn m-0 p-0 todo_mark" data-number="'+e.data.seq+ '"data-toggle="tooltip" data-placement="bottom" title="Mark as complete"></i>'+
@@ -242,12 +246,13 @@ window.onload = function () {
 						    '</div>';				
 						    $(".to_do_list").append(item);
 						    $(".todo_content").val('');	
-						    $('[data-toggle="tooltip"]').tooltip();						
+						    $('[data-toggle="tooltip"]').tooltip();				
+				}			
 			}
 		});	
     });
     
-  	//마커 클릭시
+  	//COMPLETED , ACTIVE설정
 	$(document).on("click",".todo_mark",function(){
 			
 			var seq = $(this).data("number"); //클릭한 할 일의 번호
@@ -255,6 +260,7 @@ window.onload = function () {
 			
 			if($(this).hasClass("fa-square-o") === true){  // 아직 할 일 상태이면
 					//db에 업데이트
+				
 					//해당 seq를 가진 todo에 접근해서 todo_state를 completed로 바꿔줌
 					var data = {
 						seq : seq,
@@ -294,20 +300,6 @@ window.onload = function () {
 					});
 			}
 		});   
-		/*
-		//로그아웃
-		$(".fa-sign-out").on("click",function(e){
-			 e.preventDefault();
-			 
-			$.ajax({
-				url : "/logout",
-	    		type : "post",
-	    		success : function(e){
-					location.href = "/login/loginForm";
-    			}
-			});
-		});
-		*/
 		
 		//Filter 클릭 시
 		$('#select').change(function() {

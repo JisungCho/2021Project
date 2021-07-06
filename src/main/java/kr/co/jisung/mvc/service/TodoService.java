@@ -60,7 +60,7 @@ public class TodoService {
 	}
 	
 	/*
-	 * 상태 변경
+	 * 마감으로 변경
 	 */
 	public void changeState() {
 		repository.changeState();

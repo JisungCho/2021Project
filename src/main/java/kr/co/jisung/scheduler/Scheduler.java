@@ -14,8 +14,8 @@ public class Scheduler {
 	TodoService service;
 	
 	//매일 자정에 기간이 지난 todo이면서 상태가 ACTIVE인 todo는 상태를 HAS-DUE-DATE로 바꿔줌
-	//현재는 매 시간 체크
-	@Scheduled(cron = "0 0 0/1 1/1 * ?")
+	//현재는 매 분마다 체크
+	@Scheduled(cron = "0 * * * * *")
 	public void schedule1() {
 		service.changeState();
 	}

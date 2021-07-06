@@ -57,6 +57,8 @@
 			#{member_seq}
 		)
 	</insert>	
+	
+	<!-- 마감 설정 -->
 	<update id="changeState">
 			<![CDATA[
 				UPDATE todo

@@ -32,6 +32,7 @@ public class JoinController {
 		logger.info("sign up");
 	}
 	
+	//회원가입 처리
 	@PostMapping("/save")
 	@ResponseBody
 	public BaseResponse<String> saveMember(@RequestBody Member member) {
